@@ -1,0 +1,38 @@
+<!doctype html>
+	<head>
+		<title>LaunchDarkly JavaScript SDK Example</title>
+		<script language="javascript" type="text/javascript"></script>
+        <script src="../launchdarkly-js-client-sdk/dist/ldclient.min.js"></script>
+        <script src="data.js"></script>
+	</head>
+    <body>
+        <div id="subheader">
+			<h2>JavaScript SDK Example</h2>
+			<div class="line">
+			</div>
+		</div>
+		<div id="main">
+		<div id="leftside">
+            <h2>Boolean Variation</h2>
+			<p id="demo"></p>
+            <script>
+                var ldclient = LDClient.initialize(clientID, user);
+                
+                function testFeature() {
+                  var showFeature = ldclient.variation(FeatureFlag, false);
+                  var result = showFeature.toString();
+                  var eval_result = result.toUpperCase();
+                  document.getElementById("demo").innerHTML = "<br>This page is a simle demo of the LaunchDarkly JavaScript SDK.<br> \
+                  <br>The JavaScript SDK has been set to get streaming event updates \
+                  without having to refresh this page in the broswer.<br> \
+                  <br>When you toggle the <b>" + FeatureFlag + "</b> feature flag, the evaluation result will change.<br> \
+                  <br>The result of the evaluation from your LaunchDarkly feature flag <b>" + FeatureFlag + "</b> is: <b>" + eval_result + "</b>";
+                };
+    
+                ldclient.on('ready', testFeature);
+                ldclient.on('change', testFeature);
+            </script>
+		</div>
+    </body>
+</html>
+
